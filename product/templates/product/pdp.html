@@ -28,17 +28,18 @@
     </div>
 
     
-    <div class="flex flex-col">
+    <div class="flex flex-col gap-4">
       {% block variant_add_to_cart %}
       <div
         id="variant-add-to-cart"
         hx-swap-oob="true"
-        class="flex shrink-0 h-fit px-4"
+        class="flex shrink-0 h-fit px-4 gap-4"
       >
         
         {% if not cart_item.quantity %}
         <button
           type="submit"
+          class="bg-green-200 rounded-xl w-full text-center h-10 border-green-400 border hover:bg-green-300"
           hx-get="/product/add_to_cart_pdp/{{product.id}}/{{variant.id}}"
         >
           Agregar al carro
@@ -64,7 +65,7 @@
         <div class="flex flex-row justify-center gap-4">
           {% for color_variant in product.get_variants_by_colors %}
             <div 
-              class="bg-{{color_variant.color}}-300 cursor-pointer rounded-full h-10 w-10"
+              class="bg-{{color_variant.color}}-300 hover:bg-{{color_variant.color}}-400 cursor-pointer rounded-full h-10 w-10"
               hx-get="/product/{{product.id}}?v={{color_variant.id}}"
               hx-target="body"
               hx-replace-url="true"
