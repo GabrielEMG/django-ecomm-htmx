@@ -19,16 +19,15 @@
           hx-boost="true"
           hx-trigger="click"
           hx-replace-url="true"
-          hx-push-url="/product/{{product.id}}?v={{variant.id}}"
           hx-swap="outerHTML"
           src={{variant.get_first_media.image.url}} 
           alt={{product.name}}
-          style="aspect-ratio: 3/4"
+
           class="cursor-pointer overflow-hidden object-cover w-full h-full hover:brightness-105 hover:scale-110 brightness-90 duration-300"
           
         />
       </div>
-      <div>{{variant}}</div>
+      <div class="text-sm h-20">{{variant}}</div>
       <div class="h-28 z-10 bg-white">
         <div class="justify-center flex">${{variant.price}}</div>
         <div class="flex flex-row justify-center gap-4">

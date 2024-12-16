@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="flex flex-row flex-wrap w-full">
+<div id="cart-content" class="flex flex-row flex-wrap w-full">
   {% for cart_item in cart_items %}
     {% block cart_item %}
     {% if cart_item.quantity > 0 %}
