@@ -20,7 +20,7 @@
             src="{{cart_item.product.get_first_media.image.url}}" 
             alt="{{cart_item.product.name}}"
             class="cursor-pointer overflow-hidden object-cover w-full h-full hover:brightness-105 hover:scale-110 brightness-90 duration-300"
-            style="aspect-ratio: 3/4"
+            style="aspect-ratio: 3/4;"
             hx-get="/product/{{cart_item.product.product.id}}?v={{cart_item.product.id}}"
             hx-target="body"
             hx-trigger="click"
