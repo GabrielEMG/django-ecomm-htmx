@@ -16,6 +16,7 @@
           id="plp-product-image-{{variant.id}}"
           hx-get="/product/{{product.id}}?v={{variant.id}}"
           hx-target="body"
+          hx-boost="true"
           hx-trigger="click"
           hx-replace-url="true"
           hx-swap="outerHTML"
