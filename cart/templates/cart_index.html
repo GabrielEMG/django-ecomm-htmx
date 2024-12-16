@@ -1,0 +1,90 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="flex flex-row flex-wrap w-full">
+  {% for cart_item in cart_items %}
+    {% block cart_item %}
+    {% if cart_item.quantity > 0 %}
+    <div
+      id="cart-item-{{cart_item.product.id}}"
+      class="flex flex-row justify-between w-1/4"
+      hx-swap-oob="true"
+    >
+      <div class="h-full flex flex-col">
+
+        <div class="w-full h-full overflow-hidden">
+          <img 
+            src="{{cart_item.product.get_first_media.image.url}}" 
+            alt="{{cart_item.product.name}}"
+            class="cursor-pointer overflow-hidden object-cover w-full h-full hover:brightness-105 hover:scale-110 brightness-90 duration-300"
+            style="aspect-ratio: 3/4"
+            hx-get="/product/{{cart_item.product.product.id}}?v={{cart_item.product.id}}"
+            hx-target="body"
+            hx-trigger="click"
+            hx-replace-url="true"
+          />
+        </div>
+        <div>
+          COLOR: {{cart_item.product.color}}
+        </div>
+        <div>
+          TALLA: {{cart_item.product.size}}
+        </div>
+        <div>
+          PRECIO: ${{cart_item.product.price}}
+        </div>
+        <div class="flex flex-row w-full justify-between px-2">
+          <button 
+            type="submit" 
+            hx-get="/carro/add_to_cart/{{cart_item.product.id}}"
+            class="rounded-full px-4 border border-green-300 "
+          >+</button>
+          {{cart_item.quantity}}
+          <button
+            type="submit" 
+            hx-get="/carro/remove_from_cart/{{cart_item.product.id}}"
+            class="rounded-full px-4 border border-red-300"
+          >-</button>
+        </div>
+        <div>
+          TOTAL: ${{cart_item.total}}
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div id="cart-item-{{cart_item.product.id}}"  hx-swap-oob="true" class="hidden">
+    </div>
+    {% endif %}
+    {% endblock cart_item %}
+  
+  {% endfor %}
+  
+  {% with cart.total as total%}
+  {% block cart_total %}
+  <div 
+    class="fixed bottom-0 w-full h-16 flex bg-green-300 gap-4 justify-between items-center p-4"
+    id="cart-total"
+    hx-swap-oob="true"
+  >
+    <div>
+      Total: ${{total}}
+    </div>
+    <div
+      hx-get="/orden/"
+      hx-target="body"
+      hx-swap="outerHTML"
+      hx-replace-url="true"
+      class="cursor-pointer"
+    >
+      continuar
+    </div>
+  </div>
+  {% endblock cart_total %}
+  {% endwith %}
+</div>
+
+
+{% endblock content %}

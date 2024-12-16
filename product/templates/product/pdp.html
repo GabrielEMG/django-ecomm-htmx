@@ -1,0 +1,104 @@
+
+
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<div id="content" class="flex flex-col flex-wrap w-full">
+  
+  <div class="flex justify-center text-3xl p-4">
+    <h1>{{product.name}}</h1>
+  </div>
+
+
+  <div class="grid grid-cols-2">
+
+    <div class="flex grow-0 flex-col text-gray-400 overflow-hidden">
+      {% for media in variant.get_images %}
+        <img 
+          src={{media.image.url}} 
+          alt={{product.name}}
+          class="object-cover w-full h-full"
+          id="pdp-product-image-{{variant.id}}"
+          style="aspect-ratio: 3/4"
+        >
+      {% endfor %}
+    </div>
+
+    
+    <div class="flex flex-col">
+      {% block variant_add_to_cart %}
+      <div
+        id="variant-add-to-cart"
+        hx-swap-oob="true"
+        class="flex shrink-0 h-fit px-4"
+      >
+        
+        {% if not cart_item.quantity %}
+        <button
+          type="submit"
+          hx-get="/product/add_to_cart_pdp/{{product.id}}/{{variant.id}}"
+        >
+          Agregar al carro
+        </button>
+        
+        {% else %}
+        <div class="flex flex-row gap-4">
+          <button
+            type="submit"
+            hx-get="/product/remove_from_cart_pdp/{{product.id}}/{{variant.id}}"
+          >-</button>
+          <span>{{cart_item.quantity}}</span>
+          <button
+            type="submit"
+            hx-get="/product/add_to_cart_pdp/{{product.id}}/{{variant.id}}"
+          >+</button>
+        </div>
+        {% endif %}
+      </div>
+      {% endblock variant_add_to_cart %}
+
+      <div>
+        <div class="flex flex-row justify-center gap-4">
+          {% for color_variant in product.get_variants_by_colors %}
+            <div 
+              class="bg-{{color_variant.color}}-300 cursor-pointer rounded-full h-10 w-10"
+              hx-get="/product/{{product.id}}?v={{color_variant.id}}"
+              hx-target="body"
+              hx-replace-url="true"
+            >
+               
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <div class="flex flex-col justify-between">
+          <div>
+            <h2>COLOR: {{variant.color}}</h2>
+            <p>TALLA: {{variant.size}}</p>
+          </div>
+          <div>
+            <h2>PRECIO: ${{variant.price}}</h2>
+          </div>
+          <div>
+            DESCRIPCION: {{product.description}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+  
+</div> 
+
+
+
+
+{% endblock %}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{%block title%}Ecomm{%endblock%}</title>
+
+  {% load static %}
+  <script src="{% static 'htmx.js' %}" ></script>
+  <script>
+    document.addEventListener("htmx:load", function() {
+      htmx.config.allowNestedOobSwaps = false;
+    });
+  </script>
+  <script src="{% static 'tailwind.js' %}"></script>
+
+</head>
+<body>
+  <div>
+    {% block header %}
+      <header class="flex justify-between items-center p-4 bg-gray-300 text-gray-700 ">
+        <div
+          hx-get="/"
+          hx-target="body"
+          hx-replace-url="true"
+          hx-swap="outerHTML"
+          class="text-2xl cursor-pointer"
+        >
+          Ecomm
+        </div>
+        {% block cartcount %}
+          <div
+            hx-get="/carro/"
+            hx-target="body"
+            hx-swap="outerHTML"
+            hx-replace-url="true"
+            class="mx-2 cursor-pointer"
+            id="cart-counter"
+            hx-swap-oob="true"
+          >
+            Carro: {{request.session.cart_count}}
+          </div>
+        {% endblock %}
+      </header>
+    {% endblock %}
+  </div>
+  <div>
+    {% block content %}{% endblock content %}
+  </div>
+</body>
+</html>

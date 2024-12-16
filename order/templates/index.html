@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% block order_form %}
+<form 
+  hx-post="/orden/create/"
+  hx-target="body"
+  hx-replace-url="true"
+  class="flex flex-col gap-4"  
+>
+  {% csrf_token %}
+  <div>
+    <label for="name">Nombre</label>
+    <input
+      type="text"
+      name="name"
+      id="name"
+      value="gabriel"
+      required
+    >
+  </div>
+  <div>
+    <label for="email">Email</label>
+    <input
+      type="email"
+      name="email"
+      id="email"
+      value="ge.molinagutierrez@gmail.com"
+      required
+    >
+  </div>
+  <div>
+    <label for="address">Dirección</label>
+    <input
+      type="text"
+      name="address"
+      id="address"
+      value="metropolitana - santiago - amunategui 890"
+      required />
+  </div>
+  <button type="submit">Enviar</button>
+</form>
+
+{% endblock order_form %}
+
+{% block cart_resume %}
+<div>
+  ${{cart.total}}
+</div>
+
+{% endblock cart_resume %}
+
+{% endblock content %}

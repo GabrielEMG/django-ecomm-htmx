@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="content" class="flex flex-row flex-wrap w-full">
+  {% for product in products %}
+    {% with variant=product.get_first_variant %}
+    {% block product_card %}
+    <div 
+      class="flex relative justify-center flex-col w-1/3 text-gray-400 overflow-hidden"
+      hx-swap-oob="true"
+      id="product-card-{{product.id}}"
+    >
+      <div class="w-full h-full overflow-hidden">
+        <img 
+          id="plp-product-image-{{variant.id}}"
+          hx-get="/product/{{product.id}}?v={{variant.id}}"
+          hx-target="body"
+          hx-trigger="click"
+          hx-replace-url="true"
+          hx-swap="outerHTML"
+          src={{variant.get_first_media.image.url}} 
+          alt={{product.name}}
+          style="aspect-ratio: 3/4"
+          class="cursor-pointer overflow-hidden object-cover w-full h-full hover:brightness-105 hover:scale-110 brightness-90 duration-300"
+        />
+      </div>
+      <div>{{variant}}</div>
+      <div class="h-28 z-10 bg-white">
+        <div class="justify-center flex">${{variant.price}}</div>
+        <div class="flex flex-row justify-center gap-4">
+          {% for color_variant in product.get_variants_by_colors %}
+            <div 
+              class="bg-{{color_variant.color}}-300 cursor-pointer rounded-full h-10 w-10 select-none"
+              hx-get="/product/get_card_by_variant_id/{{product.id}}/{{color_variant.id}}"
+            >
+              &nbsp;
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      
+    </div>
+    {% endblock product_card %}
+    {% endwith %}
+  {% endfor %}
+  </div>
+
+{% endblock content %}
