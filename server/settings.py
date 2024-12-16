@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'product',
     'vendor',
     'cart',
