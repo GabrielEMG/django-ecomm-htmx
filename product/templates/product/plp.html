@@ -33,7 +33,7 @@
         <div class="flex flex-row justify-center gap-4">
           {% for color_variant in product.get_variants_by_colors %}
             <div 
-              class="bg-{{color_variant.color}}-300 cursor-pointer rounded-full h-10 w-10 select-none"
+              class="bg-{{color_variant.color}}-300 cursor-pointer rounded-full h-6 w-6 select-none"
               hx-get="/product/get_card_by_variant_id/{{product.id}}/{{color_variant.id}}"
             >
               &nbsp;
