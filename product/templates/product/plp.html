@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div id="content" class="flex flex-row flex-wrap w-full">
+<div id="plp-content" class="flex flex-row flex-wrap w-full">
   {% for product in products %}
     {% with variant=product.get_first_variant %}
     {% block product_card %}
@@ -19,11 +19,13 @@
           hx-boost="true"
           hx-trigger="click"
           hx-replace-url="true"
+          hx-push-url="/product/{{product.id}}?v={{variant.id}}"
           hx-swap="outerHTML"
           src={{variant.get_first_media.image.url}} 
           alt={{product.name}}
           style="aspect-ratio: 3/4"
           class="cursor-pointer overflow-hidden object-cover w-full h-full hover:brightness-105 hover:scale-110 brightness-90 duration-300"
+          
         />
       </div>
       <div>{{variant}}</div>
